@@ -13,33 +13,33 @@ This roughly follows the same format as the original Gang-of-Four patterns catal
 
 This catalog is a continual work-in-progress; as more patterns are added to the catalog, their links will become active. Readers are encouraged to comment liberally, provide alternative implementations and/or suggest different language-specfic idioms, and/or participate in whatever fashion feels meaningful.
 
-## [Behavioral patterns](Behavioral/README.md)
+## [Behavioral patterns](Behavioral/)
 Patterns which describe the runtime relationship between one entity and another, and the flow of control between them. 
 
-## [Creational patterns](Creational/README.md)
+## [Creational patterns](Creational/)
 Patterns which specifically deal with the creation of objects/entities in the code.
 
-## [Structural patterns](Structural/README.md)
+## [Structural patterns](Structural/)
 Patterns which describe the structural (usually compile-time-related, in langauges which are compiled) relationship between one entity and another.
 
-## [Concurrency patterns](Concurrent/README.md)
-Patterns which describe how to execute operations in parallel and safeguard them from the various dangers that arise from doing so.
-
-## [Pattern compositions](Compositional/README.md)
+## [Pattern compositions](Compositional/)
 I believe that some patterns are, in fact, combinations/compositions of other patterns, and so I want to take a stab at capturing and analyzing them. (I think a number of Fowler's PEAA and the POSA books are made up of some other patterns, arranged in a particular way but interesting and useful nonetheless.)
 
-## [Architectural patterns](Architectural/README.md)
-A number of patterns "widen" well, operating either at the class/design level or at a larger scope (such as a distributed system). I'm personally not entirely sure of the parameters around an architectural pattern, or if an architectural pattern is a design pattern, particularly when I can see some architectural patterns being reasonable design patterns and vice versa, but I'll capture them and refactor later as inspiration/illumination strikes.
+## [Concurrency patterns](Concurrent/)
+Patterns which describe how to execute operations in parallel and safeguard them from the various dangers that arise from doing so.
 
-## [Bibliography](Bibliography.md)
-A bibliographic reference to all/many/most of the patterns in the catalog, in case anybody wants to get the original texts.
+## [Synchronization patterns](Synchronization/)
+Patterns which describe ways to restrict execution in such a way as to prevent two or more independent paths of execution from doing so simultaneously. These could be viewed as idiomatic to a particular platform except that they so frequently get re-implemented at all different levels of scope that it makes sense to call them out as patterns.
+
+## [Architectural patterns](Architectural/)
+A number of patterns "widen" well, operating either at the class/design level or at a larger scope (such as a distributed system). I'm personally not entirely sure of the parameters around an architectural pattern, or if an architectural pattern is a design pattern, particularly when I can see some architectural patterns being reasonable design patterns and vice versa, but I'll capture them and refactor later as inspiration/illumination strikes.
 
 # Additional pattern language(s)
 I'd like to capture all of these together into a larger pattern language/fabric.
 
 * Pattern-Oriented Software Architecture, vol 1
 
-    * [Whole-Part](structural/Whole-Part/) (structural): aggregations of components that together form a semantic unit
+    * [Whole-Part](Structural/Whole-Part/) (structural): aggregations of components that together form a semantic unit
     * <del>Master-Slave</del> *(combine this with Leader-Followers, from POSA2)* (behavioral): a master component distributes work to identical slave components and computers a final result from the results these slaves return.
     * <del>Proxy</del>
     * <del>Command Processor</del> *(definitely GOF-Command)*
@@ -48,21 +48,21 @@ I'd like to capture all of these together into a larger pattern language/fabric.
     * <del>Forwarder-Receiver</del> *(aka proxy/stub from DCOM or CORBA stubs/skeletons; definitely a Proxy variant)*
     * <del>Client-Dispatcher-Server</del>: provides location transparency by means of a name service and hides the details of the establishment of the communication connection between clients and servers *(seems like a combination of a Registry and Proxy/Forwarder-Receiver)*
     * Publisher-Subscriber *(variant of Chain of Responsibility? variant of Pipes-and-filters?)*
-    * [Layers](structural/Layers/): structure applications that can be decomposed into groups of subtasks in which each group of subtasks is at a particular level of abstraction; *(structural?)*
-    * [Pipes and filters](behavioral/PipesAndFilters/): a structure for systems that process a stream of data *(structural?)*
-    * [Blackboard](behavioral/Blackboard/): useful for problems for which no deterministic solution strategies are known *(behavioral)*
+    * [Layers](Structural/Layers/): structure applications that can be decomposed into groups of subtasks in which each group of subtasks is at a particular level of abstraction; *(structural?)*
+    * [Pipes and filters](Behavioral/PipesAndFilters/): a structure for systems that process a stream of data *(structural?)*
+    * [Blackboard](Behavioral/Blackboard/): useful for problems for which no deterministic solution strategies are known *(behavioral)*
     * Broker *(feels like a combination of multiple patterns)*
     * Model-View-Controller: divides an interactive application into three components: core functionality, representation, and control, with a change-propagation mechanism to ensure consistency between the three parts *(definitely feels like GOF-Observer/Chain-of-Responsibility hybrid)*
     * Presentation-Abstraction-Control: defines a structure for interactive software systems in the form of a hierarchy of cooperating agents, each of which is responsible for a specific aspect of the application's functionality, principally built out of three components (presentation of information, abstraction, and control). *(this is different from MVC even though it's similar)*
-    * [Microkernel](structural/Microkernel/): separates a minimal functional core from extended functionality and customer-specific parts
+    * [Microkernel](Structural/Microkernel/): separates a minimal functional core from extended functionality and customer-specific parts
     * <del>Reflection</del>: changing structure and behavior of software systems dynamically, supporting the modification of fundamental aspects, such as type structures and function call mechanisms. *(This is a DynamicObject, unless its provided by the underlying language/platform directly)*
 
 * Pattern-Oriented Software Architecture, vol 2 (Patterns for Concurrent and Networked Objects)
 
-    * [Wrapper Facade](structural/WrapperFacade) (structural)
-    * [Component Configuration](creational/ComponentConfiguration) (creational)
-    * [Interceptor](structural/Interceptor/) (structural)
-    * [Extension Interface](structural/ExtensionInterface/) (structural)
+    * [Wrapper Facade](Structural/WrapperFacade) (structural)
+    * [Component Configuration](Creational/ComponentConfiguration) (creational)
+    * [Interceptor](Structural/Interceptor/) (structural)
+    * [Extension Interface](Structural/ExtensionInterface/) (structural)
     * Reactor
     * Proactor
     * Asynchronous Completion Token
@@ -74,7 +74,7 @@ I'd like to capture all of these together into a larger pattern language/fabric.
     * Active Object
     * Monitor Object
     * Half-Sync/Half-Async
-    * Leader/Followers
+    * [Leader/Followers](Structural/Leader-Followers/)
     * <del>Thread-Specific Storage</del> *(really, this is a thread-specific [Context Object](structural/ContextObject))*
 
     The first four are categorized there as "Service Access and Configuration"; the next four, "Event Handling". "Sychronization" covers Scoped Locking, Strategized Locking, Thread-Safe Interface and Double-Checked, and "Concurrency" captures the remaining five.

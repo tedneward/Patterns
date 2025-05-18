@@ -1,16 +1,7 @@
-title=Patterns Bibliography
-date=2022-03-10
-type=page
-tags=patterns
-status=published
-description=Bibliography for patterns in the catalog.
-~~~~~~
-
+# Bibliography
 The following is the collection of books I'm using for the patterns catalog as source material and/or related material. If the book is a pattern language book (like the GOF book), it will be followed by a "shorthand-code" for reference use--the pattern form for most pattern languages was to use the pattern name and the page number of the book in which it was documented. So the GOF Singleton was referenced as "Singleton(144)". But as the different books came out, it got a little confusing, so I'm amending the notation a bit to include a "shortcode" for each book (such as "GOF" for the original Design Patterns book) and then referencing patterns using a "shortcode form", such as "Singleton (GOF/144)". It'll take time to thread this back through some of the existing material, but hopefully it will start to weave a larger pattern language out of all of the disparate books, which has been a twenty-year goal of mine.
 
 **NOTE**: Any links to Amazon are not Amazon-Referrer links, so I make no kickback from them. It's just convenient.
-
----
 
 [*Design Patterns* (**[GOF]**)](https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612): Gamma, Helm, Johnson, Vlissides; ISBN 0-20-163361-2
 

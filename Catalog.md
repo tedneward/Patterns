@@ -1,3 +1,3 @@
 # Catalog
-This is a reference to all of the patterns.
+This is an alphabetical (hand-curated) reference to all of the patterns in the catalog.
 
