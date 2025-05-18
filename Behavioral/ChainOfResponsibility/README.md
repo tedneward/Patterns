@@ -17,14 +17,19 @@ The GOF lists a couple of scenarios in which Chain makes sense:
 
 Some questions arise out of this:
 
-* **Concurrency.** Can the chain be invoked from multiple threads simultaneously?
+* **Seriality.** Can elements in the chain be processed simultaneously (as in, can a given node in the chain be a "split" or "tee" to two or more processing elements)? If so, can they be run in parallel? 
 
 * **Awareness.** Are the elements in the chain aware of each other?
 
 * **Early satisfaction.** If one element in the chain handles the request, do the others in the chain get a chance to do so as well, or is it "first-come, first-served" handling?
 
+* **Concurrency.** Can the chain be invoked from multiple threads simultaneously? 
+
+* **Chain creation/configuration.** Who is responsible for creating and configuring (registering each element) the chain? Does the chain make use of a standardized data structure (such as a common collection type like a LinkedList or Array) or does the chain manage each element itself directly?
+
+* **Re-configuration.** Is the chain able to reconfigure itself after construction?
+
 ## Implementations
-One interesting implementation note is that of maintaining the chain itself. In the C# example below, for example, the chain is maintained as a singly-linked list captured in the 
 
 * [C#](chsarp/)
 
@@ -37,7 +42,9 @@ A Chain of Responsibility tends to lead to several consequences:
 
 * **Added flexibility in assigning responsibilities to objects.** Chain of Responsibility gives you added flexibility in distributing responsibilities among objects. You can add or change responsibilities for handling a request by adding to or otherwise changing the chain at run-time. You can combine this with subclassing to specialize handlers statically.
 
-* **Receipt isn't guaranteed.** Since a request has no explicit receiver, there's no guarantee it'll be handled—the request can fall off the end ofthe chain without ever being handled. A request can also go unhandled when the chain is not configured properly.
+* **Ordering dictates priority.** If an earlier element in the chain handles the request, subsequent elements in the chain won't ever see the request.
+
+* **Receipt isn't guaranteed.** Since a request has no explicit receiver, there's no guarantee it'll be handled—-the request can fall off the end ofthe chain without ever being handled. A request can also go unhandled when the chain is not configured properly.
 
 ## Variations
 A couple of different takes on the Chain of Responsibility include:
