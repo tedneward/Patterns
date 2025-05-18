@@ -1,0 +1,34 @@
+program Envoy;
+
+makeAccount =
+  (do bal:
+    var balance = bal;
+    do action:
+      case action of
+        "withdraw": 
+          do amt:
+            if amt <= balance then
+              balance := balance - amt;
+              balance
+            else
+              throw new RuntimeException("Insufficient funds")
+            fi
+          done;
+        "deposit": 
+          do amt: 
+            balance := balance + amt;
+            balance;
+          done;
+        "balance": 
+          do: 
+            balance; 
+          done;
+        _ : throw new RuntimeException("Unknown operation")
+      esac
+    done;
+  done;);
+
+acctForEugene = makeAccount 100;
+println ((acctForEugene "withdraw") 20);
+println ((acctForEugene "deposit") 20);
+

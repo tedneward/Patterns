@@ -1,0 +1,22 @@
+program Envoy;
+
+
+// Comment
+
+withdraw = 
+  (do:
+    var balance = 100;
+    do amt:
+      if amt <= balance then
+        balance := balance - amt;
+        balance
+      else
+        throw new RuntimeException("Insufficient funds")
+      fi
+    done;
+  done;) ();
+
+println (withdraw 10);
+println (withdraw 10);
+println (withdraw 10);
+

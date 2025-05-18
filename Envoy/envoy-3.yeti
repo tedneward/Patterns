@@ -1,0 +1,19 @@
+program Envoy;
+
+makeWithdraw =
+  (do bal:
+    var balance = bal;
+    do amt:
+      if amt <= balance then
+        balance := balance - amt;
+        balance
+      else
+        throw new RuntimeException("Insufficient funds")
+      fi
+    done;
+  done;);
+
+acctForEugene = makeWithdraw 100;
+println (acctForEugene 10);
+println (acctForEugene 10);
+

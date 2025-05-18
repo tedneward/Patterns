@@ -1,0 +1,24 @@
+program Envoy;
+
+withdraw = 
+  do bal amt:
+    if amt <= bal then
+      bal - amt
+    else
+      throw new RuntimeException("Insufficient funds")
+    fi
+  done;
+
+deposit =
+  do bal amt:
+    bal + amt
+  done;
+  
+accrueInterest =
+  do bal intRate:
+    bal + (bal * intRate)
+  done;
+
+balance = 100;
+println (withdraw balance 10)
+

@@ -1,0 +1,53 @@
+program Envoy;
+
+makeAccount =
+  (do bal:
+    var balance = bal;
+    var transactionLog is list<string> = [];
+    logTransaction action amount = 
+      transactionLog := "Action: \(action) for \(amount)" :: transactionLog;
+    do action:
+      case action of
+        "withdraw":
+          do amt:
+            if amt <= balance then
+              logTransaction "withdraw" amt;
+              balance := balance - amt;
+              balance
+            else
+              throw new RuntimeException("Insufficient funds")
+            fi
+          done;
+        "deposit": 
+          do amt:
+            logTransaction "deposit" amt;
+            balance := balance + amt;
+            balance
+          done;
+        "balance": 
+          do: 
+            println transactionLog;
+            balance
+          done;
+        _ : throw new RuntimeException("Unknown operation")
+      esac
+    done;
+  done;);
+
+withdraw =
+  (do acct amt:
+    (acct "withdraw") amt;
+  done;);
+deposit =
+  (do acct amt:
+    (acct "deposit") amt;
+  done;);
+balance =
+  (do acct:
+    acct "balance" 0;
+  done;);
+
+acctForEugene = makeAccount 100;
+println (withdraw acctForEugene 20);      // 80
+println (deposit acctForEugene 20);       // 100
+println (balance acctForEugene);          // 100
