@@ -130,5 +130,51 @@ struct v2 {
     }
 }
 
-let atm = v2.ATM()
+struct v3 {
+    typealias ATMHandler = (Currency) -> Currency
+
+    class ATM {
+        private var chain: [ATMHandler] = []
+
+        init() {
+            let fiftyDollarHandler: ATMHandler = { request in
+                let count = Int(request.amount / 50)
+                let remainder = request.amount - Double(count * 50)
+                if count > 0 {
+                    print("Dispensing \(count) $50 bill(s)")
+                }
+                return Currency(amount: remainder)
+            }
+            
+            let twentyDollarHandler: ATMHandler = { request in
+                let count = Int(request.amount / 20)
+                let remainder = request.amount - Double(count * 20)
+                if count > 0 {
+                    print("Dispensing \(count) $20 bill(s)")
+                }
+                return Currency(amount: remainder)
+            }
+            
+            let tenDollarHandler: ATMHandler = { request in
+                let count = Int(request.amount / 10)
+                let remainder = request.amount - Double(count * 10)
+                if count > 0 {
+                    print("Dispensing \(count) $10 bill(s)")
+                }
+                return Currency(amount: remainder)
+            }
+            
+            chain += [fiftyDollarHandler, twentyDollarHandler, tenDollarHandler]
+        }
+        
+        func dispense(request: Currency) {
+            var amount = request
+            for handler in chain {
+                amount = handler(amount)
+            }        
+        }
+    }
+}
+
+let atm = v3.ATM()
 atm.dispense(request: Currency(amount: 190))
