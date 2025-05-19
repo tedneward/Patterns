@@ -31,7 +31,7 @@ Some questions arise out of this:
 
 ## Implementations
 
-* [C#](chsarp/)
+* The [C#](chsarp/) implementation demonstrates an ATM, wherein a given amount requested by the user must be dispensed in a combination of USD$50, USD$20, and USD$10 notes, using the minimum number of actual notes. (In other words, a request for USD$200 should dispense 4xUSD$50, rather than 10xUSD$20 or 20xUSD$10 notes.) The chain is made up of "dispenser" objects, each of whom have a single method.
 
 ## Consequences
 A Chain of Responsibility tends to lead to several consequences:
@@ -49,8 +49,13 @@ A Chain of Responsibility tends to lead to several consequences:
 ## Variations
 A couple of different takes on the Chain of Responsibility include:
 
-### Publish-Subscribe/"Pub-Sub"
-When combined with a [Message-Passing Interface](../../Structural/MessagePassingInterface/), we often end up with what gets called a "publish-subscribe" system or communications backplane, particularly if the underlying delivery system is built on store-and-forward messaging systems (JMS, MSMQ, Tibco, and so on). Often, "subscribers" are a Chain of Responsibility, and each time a message is pushed into the messaging system, each subscriber receives it, independently of the other subscribers on the Chain.
+### Publish-Subscribe/"Pub-Sub" or Event Bus
+When combined with a [Message-Passing Interface](../../Structural/MessagePassingInterface/), we often end up with what gets called a "publish-subscribe" system or communications backplane, particularly if the underlying delivery system is built on store-and-forward messaging systems (JMS, MSMQ, Tibco, Kafka, NATS, and so on). Often, "subscribers" to a queue/topic are a Chain of Responsibility, and each time a message is pushed into the messaging system, each subscriber receives it, independently of the other subscribers on the Chain.
 
-### Event Bus
 When messages are being sent to a single message queue or topic with multiple registered handler/processors, we refer to that as an Event Bus. If the first interested handler/processor on the bus pulls the message off the bus, it is a Chain of Responsibility; if the messages continue down the bus so that all interested handler/processors get a chance to see it, it is more of an [Observer](../Observer/).
+
+### Workflow
+At its core, the Chain of Responsibility assumes that there is no "decisioning" nodes inside the chain that could take the processing down an entirely different path--it is a linear path that could stop processing early. If the elements in the chain can be bypassed or repeated based on the state of the request, then we have more of a "workflow" system than a singular chain.
+
+Very often, Workflow systems will be highly reconfigurable, and often long-running (meaning the workflow will need to be persistable).
+
