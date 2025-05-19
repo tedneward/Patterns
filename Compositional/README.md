@@ -3,8 +3,8 @@ For many years, I've looked at all the different "scope levels" that patterns se
 
 Some of the patterns I expect to analyze and document here include:
 
-* Model-View-Controller (from POSA1 and GOF intro)
-* View Handler (from POSA1)
-* Client-Dispatcher-Server (from POSA1)
+* POSA1:Model-View-Controller: [Observer]() + [Composite]() + [Strategy]()
+* POSA1:View Handler: [Chain of Responsibility]() + [Observer]()
+* POSA1:Client-Dispatcher-Server: ?
 
 *(TODO: Go through PEAA, EIP, maybe some of the Core J2EE Patterns, see what fits here)*

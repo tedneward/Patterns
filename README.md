@@ -40,13 +40,13 @@ I'd like to capture all of these together into a larger pattern language/fabric.
 * Pattern-Oriented Software Architecture, vol 1
 
     * [Whole-Part](Structural/Whole-Part/) (structural): aggregations of components that together form a semantic unit
-    * <del>Master-Slave</del> *(combine this with Leader-Followers, from POSA2)* (behavioral): a master component distributes work to identical slave components and computers a final result from the results these slaves return.
-    * <del>Proxy</del>
-    * <del>Command Processor</del> *(definitely GOF-Command)*
-    * View Handler *(sounds like a Chain of Responsibility/Observer hybrid)*
+    * ~~Master-Slave~~ *(combine this with POSA2-Leader-Followers)* (behavioral): a master component distributes work to identical slave components and computers a final result from the results these slaves return.
+    * ~~Proxy~~ *(GOF-Proxy)*
+    * ~~Command Processor~~ *(definitely GOF-Command)*
+    * ~~View Handler~~ *(sounds like a Chain of Responsibility/Observer hybrid)*
     * Counted Pointer (structural) *(this is an idiom for C++, but the idea of objects "carrying" additional information about themselves to provide additional functionality feels too commmon to be just a variant on Proxy)*
-    * <del>Forwarder-Receiver</del> *(aka proxy/stub from DCOM or CORBA stubs/skeletons; definitely a Proxy variant)*
-    * <del>Client-Dispatcher-Server</del>: provides location transparency by means of a name service and hides the details of the establishment of the communication connection between clients and servers *(seems like a combination of a Registry and Proxy/Forwarder-Receiver)*
+    * ~~Forwarder-Receiver~~ *(aka proxy/stub from DCOM or CORBA stubs/skeletons; definitely a Proxy variant)*
+    * ~~Client-Dispatcher-Server~~: provides location transparency by means of a name service and hides the details of the establishment of the communication connection between clients and servers *(seems like a combination of a Registry and Proxy/Forwarder-Receiver)*
     * Publisher-Subscriber *(variant of Chain of Responsibility? variant of Pipes-and-filters?)*
     * [Layers](Structural/Layers/): structure applications that can be decomposed into groups of subtasks in which each group of subtasks is at a particular level of abstraction; *(structural?)*
     * [Pipes and filters](Behavioral/PipesAndFilters/): a structure for systems that process a stream of data *(structural?)*
@@ -55,7 +55,7 @@ I'd like to capture all of these together into a larger pattern language/fabric.
     * Model-View-Controller: divides an interactive application into three components: core functionality, representation, and control, with a change-propagation mechanism to ensure consistency between the three parts *(definitely feels like GOF-Observer/Chain-of-Responsibility hybrid)*
     * Presentation-Abstraction-Control: defines a structure for interactive software systems in the form of a hierarchy of cooperating agents, each of which is responsible for a specific aspect of the application's functionality, principally built out of three components (presentation of information, abstraction, and control). *(this is different from MVC even though it's similar)*
     * [Microkernel](Structural/Microkernel/): separates a minimal functional core from extended functionality and customer-specific parts
-    * <del>Reflection</del>: changing structure and behavior of software systems dynamically, supporting the modification of fundamental aspects, such as type structures and function call mechanisms. *(This is a DynamicObject, unless its provided by the underlying language/platform directly)*
+    * ~~Reflection~~: changing structure and behavior of software systems dynamically, supporting the modification of fundamental aspects, such as type structures and function call mechanisms. *(This is a DynamicObject, unless its provided by the underlying language/platform directly)*
 
 * Pattern-Oriented Software Architecture, vol 2 (Patterns for Concurrent and Networked Objects)
 
@@ -65,17 +65,17 @@ I'd like to capture all of these together into a larger pattern language/fabric.
     * [Extension Interface](Structural/ExtensionInterface/) (structural)
     * Reactor
     * Proactor
-    * Asynchronous Completion Token
+    * [Asynchronous Completion Token](Structural/AsynchronousCompletionToken/) (structural)
     * Acceptor-Connector
-    * Scoped Locking *(originally presented as a C++ idiom relying on C++'s "RAII" (Resource Acquisition Is Initialization) behavior around determinstic constructors and destructors; not sure if it generalizes well beyond that)*
+    * ~~Scoped Locking~~ *(originally presented as a C++ idiom relying on C++'s "RAII" (Resource Acquisition Is Initialization) behavior around determinstic constructors and destructors; not sure if it generalizes well beyond that)*
     * Strategized Locking
     * Thread-Safe Interface
-    * <del>Double-Checked Locking Optimization</del> *(this has been proven over and over again to be a naive optimization given insufficient memory model guarantees to prevent out-of-order execution)*
+    * ~~Double-Checked Locking Optimization~~ *(this has been proven over and over again to be a naive optimization given insufficient memory model guarantees to prevent out-of-order execution)*
     * Active Object
     * Monitor Object
     * Half-Sync/Half-Async
     * [Leader/Followers](Structural/Leader-Followers/)
-    * <del>Thread-Specific Storage</del> *(really, this is a thread-specific [Context Object](structural/ContextObject))*
+    * ~~Thread-Specific Storage~~ *(really, this is a thread-specific [Context Object](structural/ContextObject))*
 
     The first four are categorized there as "Service Access and Configuration"; the next four, "Event Handling". "Sychronization" covers Scoped Locking, Strategized Locking, Thread-Safe Interface and Double-Checked, and "Concurrency" captures the remaining five.
 
@@ -128,6 +128,89 @@ I'd like to capture all of these together into a larger pattern language/fabric.
     * Optimistic Lock
     * Pessimistic Lock
     * Compensating Transaction
+
+* Patterns of Enterprise Application Architecture (PEAA):
+
+    * Domain Logic Patterns
+
+        * Transaction Script: Organizes business logic by procedures where each procedure handles a single request from the presentation.
+        * Domain Model: An object model of the domain that incorporates both behavior and data.
+        * Table Module: A single instance that handles the business logic for all rows in a database table or view.
+        * Service Layer: Defines an application's boundary with a layer of services that establishes a set of available operations and coordinates the application's response in each operation.
+
+    * Data Source Architectural Patterns
+
+        * Table Data Gateway: An object that acts as a gateway to a database table. One instance handles all the rows in the table.
+        * Row Data Gateway: An object that acts as a gateway to a single record in a data source. There is one instance per row.
+        * Active Record: An object that wraps a row in a database table or view, encapsulates the database access, and adds domain logic on that data.
+        * Data Mapper: A layer of mappers that moves data between objects and a database while keeping them independent of each other and the mapper itself.
+
+    * Object-Relational Behavioral Patterns
+
+        * Unit of Work: Maintains a list of objects affected by a business transaction and coordinates the writing out of changes and the resolution of concurrency problems.
+        * Identity Map: Ensures that each object gets loaded only once by keeping every loaded object in a map. Looks up objects using the map when referring to them.
+        * Lazy Load: An object that doesn't contain all of the data you need but knows how to get it.
+
+    * Object-Relational Structural Patterns
+
+        * Identity Field: Saves a database ID field in an object to maintain identity between an in-memory object and a database row.
+        * Inheritance Mappers: A structure to organize database mappers that handle inheritance hierarchies.
+        * Foreign Key Mapping: Maps an association between objects to a foreign key reference between tables.
+        * Association Table Mapping: Saves an association as a table with foreign keys to the tables that are linked by the association.
+        * Dependent Mapping: Has one class perform the database mapping for a child class.
+        * Embedded Value: Maps an object into several fields of another object's table.
+        * Serialized LOB: Saves a graph of objects by serializing them into a single large object (LOB), which it stores in a database field.
+        * Single Table Inheritance: Represents an inheritance hierarchy of classes as a single table that has columns for all the fields of the various classes.
+        * Class Table Inheritance: Represents an inheritance hierarchy of classes with one table for each class.
+        * Concrete Table Inheritance: Represents an inheritance hierarchy of classes with one table per concrete class in the hierarchy.
+
+    * Object-Relational Metadata Mapping Patterns
+
+        * Metadata Mapping: Holds details of object-relational mapping in metadata.
+        * Query Object: An object that represents a database query.
+        * Repository: Mediates between the domain and data mapping layers using a collection-like interface for accessing domain objects.
+
+    * Web Presentation Patterns
+
+        * Model View Controller: Splits user interface interaction into three distinct roles.
+        * Page Controller: An object that handles a request for a specific page or action on a Web site.
+        * Front Controller: A controller that handles all requests for a Web site.
+        * Template View: Renders information into HTML by embedding markers in an HTML page.
+        * Transform View: A view that processes domain data element by element and transforms it into HTML.
+        * Two Step View: Turns domain data into HTML in two steps: first by forming some kind of logical page, then rendering the logical page into HTML.
+        * Application Controller: A centralized point for handling screen navigation and the flow of an application.
+
+    * Distribution Patterns
+
+        * Remote Facade: Provides a coarse-grained facade on fine-grained objects to improve efficiency over a network.
+        * Data Transfer Object: An object that carries data between processes in order to reduce the number of method calls.
+
+    * Offline Concurrency Patterns
+
+        * Optimistic Offline Lock: Prevents conflicts between concurrent business transactions by detecting a conflict and rolling back the transaction.
+        * Pessimistic Offline Lock: Prevents conflicts between concurrent business transactions by allowing only one business transaction at a time to access data.
+        * Coarse-Grained Lock: Locks a set of related objects with a single lock.
+        * Implicit Lock: Allows framework or layer supertype code to acquire offline locks.
+
+    * Session State Patterns
+
+        * Client Session State: Stores session state on the client.
+        * Server Session State: Keeps the session state on a server system in a serialized form
+        * Database Session State: Stores session data as committed data in the database.
+
+    * Base Patterns
+
+        * Gateway: An object that encapsulates access to an external system or resource.
+        * Service Stub: Removes dependence upon problematic services during testing. WSDL
+        * Record Set: An in-memory representation of tabular data.
+        * Mapper: An object that sets up a communication between two independent objects.
+        * Layer Supertype: A type that acts as the supertype for all types in its layer.
+        * Separated Interface: Defines an interface in a separate package from its implementation.
+        * Registry: A well-known object that other objects can use to find common objects and services.
+        * Value Object: A small simple object, like money or a date range, whose equality isn't based on identity.
+        * Money: Represents a monetary value.
+        * Special Case: A subclass that provides special behavior for particular cases.
+        * Plugin: Links classes during configuration rather than compilation.
 
 I also plan to go back through some of my patterns books (such as the "Pattern Languages of Program Design" books that were published in the late 90's/early 00's) and cherry-pick some that seem to fit in the above categorization scheme.
 
