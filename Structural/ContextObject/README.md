@@ -1,14 +1,5 @@
-title=Context Object
-date=2022-02-25
-type=pattern
-tags=pattern, structural
-status=published
-description=Use an object to provide some degree of inference or reference about the environment in which another object or group of objects is operating. 
-~~~~~~
-
-***tl;dr*** Context Objects often provide a degree of scope for a group of objects operating within a larger space (such as an app server), and as such often serve as a means of access both outside of the scope (for those objects within it) and to the inside of the scope (for those objects outside of it) without violating encapsulation. Context objects can also provide some specific guarantees about those elements stored within the context, such as thread-safe access or transactional boundaries.
-
-<!--more-->
+# Context Object
+A context object is a singular object that "wraps" a particular sense of "scope" smaller than that of the global scope, providing a single place of access for that context/scope. Context Objects often provide scope for a group of objects operating within a larger space (such as an app server), and as such often serve as a means of access both outside of the scope (for those objects within it) and to the inside of the scope (for those objects outside of it) without violating encapsulation. Context objects can also provide some specific guarantees about those elements stored within the context, such as thread-safe access or transactional boundaries.
 
 We often see Context Objects used in HTTP middleware, where the HTTP request is captured as a single object containing not only all the headers (and their values) as well as any query parameters (and their values), but information about the request itself, such as the transport (http or https), the relative resource path, any fragments, and so on. 
 
@@ -21,7 +12,6 @@ Frequently an operation, which consists fundamentally of inputs and a generated 
 Define a wrapper object that encapsulates all aspects of an operation, including details that may not be directly related to that operation. Context allows an object or graph of objects to be handled in a single logical unit, as part of a logical unit of work.
 
 ## Solution
-
 To create a Context Object, define a wrapper object that encapsulates all aspects of an operation, including details that may not be directly related to that operation. Context allows an object or graph of objects to be handled in a single logical unit, as part of a logical unit of work.
 
 
@@ -35,12 +25,15 @@ Some questions arise out of this:
 A Context Object tends to lead to several consequences:
 
 ## Relationships
+Context Objects are often used to capture the parameters and other information passed along to an [Interceptor](../Interceptor/), either explicitly as part of the Interceptor interface or along a "side channel" if the signature of the Interceptor needs to conform to pre-existing descriptions. Servlets created an explicit `HttpContext` object for accessing the application scope of a J2EE application.
 
-Context Objects are often used to capture the parameters and other information passed along to an [Interceptor](../Interceptor/), either explicitly as part of the Interceptor interface or along a "side channel" if the signature of the Interceptor needs to conform to pre-existing descriptions.
+Context is often the object passed along a [Chain of Responsibility](../../Behavioral/ChainOfResponsibility/); each `ConcreteHandler` in the Chain examines the Context and potentially modifies it as necessary before handing it along to the next Handler in the Chain.
 
-Context is often the object passed along a [Chain of Responsibility](../../behavioral/ChainOfResponsibility/); each ConcreteHandler in the Chain examines the Context and potentially modifies it as necessary before handing it along to the next Handler in the Chain.
+Context is also used as a wrapper for a [Command](../../Behavioral/Command/) object, providing additional information beyond the Command itself. The key difference between the two is that Context provides out-of-band information that the Command object may not even know is there, for processing by others around the Command.
 
-Context is also used as a wrapper for a [Command](../../behavioral/Command/) object, providing additional information beyond the Command itself. The key difference between the two is that Context provides out-of-band information that the Command object may not even know is there, for processing by others around the Command.
+Context Objects are also often used as part of a Unit of Work or Transaction Script (PEAA), and are often either implicitly or explicity associated with the transaction. (It is not uncommon for the Context Object to be both the source of enlisting in the transaction as well as the implicit scope )
+
+Context is what is passed into a Flyweight (alias Glyph's). *(credit to Mark Levison for this note)*
 
 ## Variations
 A couple of different takes on the Context Object include:
@@ -48,7 +41,6 @@ A couple of different takes on the Context Object include:
 * ***Thread-specific storage (POSA2 475).*** Not only the pattern documented in POSA2, but the language/platform-level support provided.
 
 * ***Parameter Object (PEAA).*** Fowler's Parameter Object pattern describes the use of an object to capture a variety of required or optional parameters to a method call rather than directly-declared parameters on the function or method call, allowing for additional extensibility and flexibility over time. This is a very simple form of Context Object, where the context is the scope of that function call. Interestingly, if the context object is attached someplace beyond the thread stack, the parameter object no longer has to be explicitly passed down the call chain, which may make it easier to allow downstream recipients to access it.
-
 
 ## Known Uses
 Several distributed communication toolkits make use of Context or something very similar to it. COM+, for example, uses the notion of Context as a interception barrier, allowing for a tightly-coupled graph of objects to be treated as an atomic unit, synchronizing multi-threaded calls into the context, also called an apartment. Transactions are traced as they flow through different parts of the system, such that each Context knows the transaction ID it was associated with and can allow that same transaction ID (the causality) to continue to flow through, thus avoiding self-deadlock.
@@ -59,7 +51,7 @@ Similarly, more modern HTTP/middleware toolkits make use of Context, wherein the
 
 ---
 
-The followup looked like this:
+The followup (from the first time I posted this) looked like this:
 
 <blockquote>
 <p>Wow--lots of you have posted comments about Context. Let's address some of them and see what comes up in the second iteration:  
