@@ -1,12 +1,9 @@
-title=Builder: C#
-date=2016-05-23
-type=pattern
-tags=pattern implementation, creational, csharp
-status=published
-description=A Builder implementation in C#.
-~~~~~~
+# Builder: C#
+C# has in many ways inherited its relationship with Builder from Java, where it was usually called by the more degenerative term "Factory" or "Factory pattern".  (Technically, what Java calls a "Factory pattern" is typically one of Builder,  [Factory Method](../FactoryMethod), or [Abstract Factory](../AbstractFactory), depending  on what precisely looks to be varied and/or encapsulated.) C#, however, never fell quite as deeply in love with the "Factory pattern" as the Java development crowd did, and as such it wasn't as widely used.
 
-C# has in many ways inherited its relationship with [Builder](Builder.html) from Java, where it was usually called by the more degenerative term "Factory" or "Factory pattern".  (Technically, what Java calls a "Factory pattern" is typically one of Builder,  [Factory Method](FactoryMethod), or [Abstract Factory](AbstractFactory), depending  on what precisely looks to be varied and/or encapsulated.) C#, however, never fell quite as deeply in love with the "Factory pattern" as the Java development crowd did, and as such it wasn't as widely used.
+To run the code in this directory, use `dotnet run`.
+
+## Walkthrough
 
 We start with the target Product:
 
@@ -17,7 +14,7 @@ class Product
 }
 ````
 
-Then, Builder suggests that we create an Abstract Creator:
+Then, the GOF approach to Builder suggests that we create an Abstract Creator:
 
 ````csharp
 abstract class Builder
@@ -76,11 +73,10 @@ public static void Main (string[] args)
 }
 ````
 
-This is pretty straightforward. Note that syntactically, we might prefer using a method named "New" instead of "Construct", since then it will feel more syntactically similar to the traditional C# "new" keyword except for the case. This is a highly aesthetic choice.
+This is pretty straightforward. Note that syntactically, we might prefer using a method named "New" instead of "Construct", since then it will feel more syntactically similar to the traditional C# "new" keyword except for the case. We might also opt to make this a static method, so that it "feels" more like we're doing this via a class, but we then lose the AbstractBuilder/Builder inheritance relationship. These are both a highly aesthetic choices.
 
 ### Fluent Builder
 In the event that we seek to construct a Fluent API in C# for a Builder, the first decision will be whether to use property syntax or method-call syntax to describe the "steps" in the Fluent API. Generally, properties feel more "readable", particularly to the non-technical crowd, but properties cannot receive parameters. On top of that, it remains a point of high contention to this day whether Fluent APIs are actually going to be exercised by non-programmers, thus making the more "readable" argument of properties somewhat moot.
-
 
 ````csharp
 class FluentBuilder
@@ -130,21 +126,22 @@ product = builder.Begin()
 Like most Fluent Builders, the C# version relies on the idea of returning the Builder object as part of each construction call, carrying the state of the construction process as-is as state inside the Builder itself, until the Product as requested as part of the final step (`Build`).
 
 #### State- vs Command-based Builders
-Note that this state-basde Fluent Builder approach suggests that a Fluent Builder will not be accessed across multiple threads (or other actors); if that becomes necessary, then it may be better to construct a Builder that is fundamentally made up of [Command](Command.html) objects that are waiting to be all executed in order, on the `build` call. That way, the Product isn't "half-baked" during the construction process, and potentially corrupted; the construction chain can be examined and/or modified (concurrently or otherwise) before the actual construction process.
+Note that this state-basde Fluent Builder approach suggests that a Fluent Builder will not be accessed across multiple threads (or other actors); if that becomes necessary, then it may be better to construct a Builder that is fundamentally made up of [Command](../../Behavioral/Command) objects that are waiting to be all executed in order, on the `build` call. That way, the Product isn't "half-baked" during the construction process, and potentially corrupted; the construction chain can be examined and/or modified (concurrently or otherwise) before the actual construction process.
 
 In C#, this can be elegantly modeled using a list of `Func<T>` objects, each one taking in the Product in its current state, performing some operation upon it (continuing the Builder process), and then returning the object-in-process. We can then chain the functions together, and run them in sequence to arrive at the result.
 
 ````csharp
 class FluentBuilderFns
 {
-    private List<Func<Product, Product>> steps = 
-        new List<Func<Product, Product>>();
+    private List<Func<Product, Product>> steps = new List<Func<Product, Product>>();
 
-    public FluentBuilderFns Begin() {
+    public FluentBuilderFns Begin() 
+    {
         steps.Clear ();
         return this;
     }
-    public FluentBuilderFns Engine {
+    public FluentBuilderFns Engine 
+    {
         get 
         {
             steps.Add ((product) => {
@@ -165,14 +162,16 @@ class FluentBuilderFns
             return this;
         }
     }
-    public FluentBuilderFns Tire() {
+    public FluentBuilderFns Tire() 
+    {
         steps.Add ((product) => {
             product.Parts.Add("Tire");
             return product;
         });
         return this;
     }
-    public Product Build() {
+    public Product Build() 
+    {
         var working = new Product ();
         foreach (var step in steps) {
             working = step (working);
@@ -201,11 +200,13 @@ class FluentBuilderFns
 {
     private Func<Product, Product> fn = null;
 
-    public FluentBuilderFns Begin() {
+    public FluentBuilderFns Begin() 
+    {
         fn = (ignored) => new Product ();
         return this;
     }
-    public FluentBuilderFns Engine {
+    public FluentBuilderFns Engine 
+    {
         get 
         {
             fn = FnUtils.Compose (fn, (product) => {
@@ -226,14 +227,16 @@ class FluentBuilderFns
             return this;
         }
     }
-    public FluentBuilderFns Tire() {
+    public FluentBuilderFns Tire() 
+    {
         fn = FnUtils.Compose (fn, (product) => {
             product.Parts.Add("Tire");
             return product;
         });
         return this;
     }
-    public Product Build() {
+    public Product Build() 
+    {
         return fn(null);
     }
 }
@@ -244,7 +247,8 @@ Note that the Product parameter in the `Begin` step is ignored, so it's safe to 
 FluentBuilders will sometimes want to take parameters, but thanks to the closure rules of C#, that's easy to capture as part of the construction logic:
 
 ````csharp
-public FluentBuilderFns Tire(int numberOfTires) {
+public FluentBuilderFns Tire(int numberOfTires) 
+{
     fn = FnUtils.Compose(fn, (product) => {
         for (int i=0; i<numberOfTires; i++)
             product.Parts.Add("Tire");

@@ -1,13 +1,9 @@
-title=Builder: Java
-date=2016-05-23
-type=pattern
-tags=pattern implementation, creational, java
-status=published
-description=A Builder implementation in Java.
-~~~~~~
+# Builder: Java
+Java has long had a relationship with [Builder](..), usually calling it by the more degenerative term "Factory" or "Factory pattern". (Technically, what Java calls a "Factory pattern" is typically one of Builder, [Factory Method](../../FactoryMethod), or [Abstract Factory](../../AbstractFactory), depending on what precisely looks to be varied and/or encapsulated.)
 
-Java has long had a relationship with [Builder](../Builder), usually calling it by the more degenerative term "Factory" or "Factory pattern". (Technically, what Java calls a "Factory pattern" is typically one of Builder, [Factory Method](../FactoryMethod), or [Abstract Factory](../AbstractFactory), depending on what precisely looks to be varied and/or encapsulated.)
+To run the code in this directory, use `gradle run`.
 
+## Walkthrough
 We start with the target Product:
 
 ````java
@@ -116,7 +112,7 @@ System.out.println(motorcycle.parts);
 Like most Fluent Builders, the Java version relies on the idea of returning the Builder object as part of each construction call, carrying the state of the construction process as-is as state inside the Builder itself, until the Product as requested as part of the final step (`build`).
 
 #### State- vs Command-based Builders
-Note that this state-basde Fluent Builder approach suggests that a Fluent Builder will not be accessed across multiple threads (or other actors); if that becomes necessary, then it may be better to construct a Builder that is fundamentally made up of [Command](../Command) objects that are waiting to be all executed in order, on the `build` call. That way, the Product isn't "half-baked" during the construction process, and potentially corrupted; the construction chain can be examined and/or modified (concurrently or otherwise) before the actual construction process.
+Note that this state-basde Fluent Builder approach suggests that a Fluent Builder will not be accessed across multiple threads (or other actors); if that becomes necessary, then it may be better to construct a Builder that is fundamentally made up of [Command](../../../Behavioral/Command/) objects that are waiting to be all executed in order, on the `build` call. That way, the Product isn't "half-baked" during the construction process, and potentially corrupted; the construction chain can be examined and/or modified (concurrently or otherwise) before the actual construction process.
 
 In Java, this can be elegantly modeled using a list of Function objects, each one taking in the Product in its current state, performing some operation upon it (continuing the Builder process), and then returning the object-in-process. We can then chain the functions together, and run them in sequence to arrive at the result.
 
