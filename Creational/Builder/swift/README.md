@@ -1,13 +1,9 @@
-title=Builder: Swift
-date=2016-04-11
-type=pattern
-tags=pattern implementation, creational, swift
-status=published
-description=A Builder implementation in Swift.
-~~~~~~
+# Builder: Swift
+Swift makes use of the [Builder](../) (or a variant of it) in a couple of places inside of Mac OS X and iOS, and thus makes it feel somewhat natural to idiomatic Swift.
 
-Swift makes use of the [Builder](Builder.html) (or a variant of it) in a couple of places inside of Mac OS X and iOS, and thus makes it feel somewhat natural to idiomatic Swift.
+Run the code in this directory via `swift run`.
 
+## Walkthrough
 We start with the target Product:
 
 ````swift
@@ -97,7 +93,6 @@ class FluentBuilder {
   }
   func Construct() -> Product { return product }
 }
-
 
 let vehicleBuilder = FluentBuilder()
 let motorcycle = vehicleBuilder.Begin()
