@@ -9,7 +9,7 @@ public abstract class Checking {
     }
     public int withdraw(int amount) {
         if (amount > balance)
-            throw new InsufficientFundsException(amount);
+            throw new IllegalStateException("You are short by " + (balance - amount) + " dollars.");
 
         balance -= amount;
         return balance;
@@ -17,7 +17,7 @@ public abstract class Checking {
     public int cashCheck(int amount) {
         if (amount > balance) {
             balance -= 5000; // $50 US overdraft fee
-            throw new InsufficientFundsException(amount);
+            throw new IllegalStateException("You are short by " + (balance - amount) + " dollars.");
         }
 
         balance -= amount;
