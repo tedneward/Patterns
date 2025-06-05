@@ -1,0 +1,40 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Patterns}/Behavioral/Command/swift",
+            "name": "Debug Command (Behavioral/Command/swift)",
+            "program": "${workspaceFolder:Patterns}/Behavioral/Command/swift/.build/debug/Command",
+            "preLaunchTask": "swift: Build Debug Command (Behavioral/Command/swift)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Patterns}/Behavioral/Command/swift",
+            "name": "Release Command (Behavioral/Command/swift)",
+            "program": "${workspaceFolder:Patterns}/Behavioral/Command/swift/.build/release/Command",
+            "preLaunchTask": "swift: Build Release Command (Behavioral/Command/swift)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Patterns}/Behavioral/ChainOfResponsibility/swift",
+            "name": "Debug ChainOfResponsibility (Behavioral/ChainOfResponsibility/swift)",
+            "program": "${workspaceFolder:Patterns}/Behavioral/ChainOfResponsibility/swift/.build/debug/ChainOfResponsibility",
+            "preLaunchTask": "swift: Build Debug ChainOfResponsibility (Behavioral/ChainOfResponsibility/swift)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Patterns}/Behavioral/ChainOfResponsibility/swift",
+            "name": "Release ChainOfResponsibility (Behavioral/ChainOfResponsibility/swift)",
+            "program": "${workspaceFolder:Patterns}/Behavioral/ChainOfResponsibility/swift/.build/release/ChainOfResponsibility",
+            "preLaunchTask": "swift: Build Release ChainOfResponsibility (Behavioral/ChainOfResponsibility/swift)"
+        }
+    ]
+}
