@@ -4,6 +4,76 @@
 package org.example;
 
 public class Library {
+    /**
+     * Simple accounts do bare-minimum benefits, higher tax rates
+     */
+    public static class SimpleAccountFactory implements AccountFactory {
+        @Override
+        public Investment openInvestmentAccount(int initialAmount) {
+            return new Investment(initialAmount) {
+                @Override
+                public int calculateTax() {
+                    return (int)(balance * 0.15);
+                }
+            };
+        }
+
+        @Override
+        public Savings openSavingsAccount(int initialAmount) {
+            return new Savings(initialAmount) {
+                @Override
+                public int calculateTax() {
+                    return (int)(balance * 0.10);
+                }
+            };
+        }
+
+        @Override
+        public Checking openCheckingAccount(int initialAmount) {
+            return new Checking(initialAmount) {
+                @Override
+                public int calculateTax() {
+                    return (int)(balance * 0.05);
+                }
+            };
+        }
+    }
+
+    /**
+     * Premium accounts have more benefits, lower tax rates
+     */
+    public static class PremiumAccountFactory implements AccountFactory {
+        @Override
+        public Investment openInvestmentAccount(int initialAmount) {
+            return new Investment(initialAmount) {
+                @Override
+                public int calculateTax() {
+                    return (int)(balance * 0.10);
+                }
+            };
+        }
+
+        @Override
+        public Savings openSavingsAccount(int initialAmount) {
+            return new Savings(initialAmount) {
+                @Override
+                public int calculateTax() {
+                    return (int)(balance * 0.05);
+                }
+            };
+        }
+
+        @Override
+        public Checking openCheckingAccount(int initialAmount) {
+            return new Checking(initialAmount) {
+                @Override
+                public int calculateTax() {
+                    return (int)(balance * 0.02);
+                }
+            };
+        }
+    }
+
     public boolean someLibraryMethod() {
         return true;
     }
