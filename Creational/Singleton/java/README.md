@@ -1,11 +1,3 @@
-title=Singleton: Java
-date=2016-03-26
-type=pattern
-tags=pattern implementation, creational, java
-status=published
-description=A Singleton implementation in Java.
-~~~~~~
-
 Like most object-oriented typed languages, Java makes it pretty straightforward to code up a classic [Singleton](../Singleton):
 
 ````java

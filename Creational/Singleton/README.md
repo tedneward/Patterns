@@ -1,22 +1,14 @@
-title=Singleton
-date=2016-03-25
-type=pattern
-tags=pattern, creational
-status=published
-description=Ensure only one instance of a given type, and provide a global point of access to it.
-~~~~~~
-
+# Singleton
 *tl;dr* Everybody's favorite (and most despised) pattern, the Singleton. Conceptually, Singleton seems the easiest of the lot to understand and (in most post-1995 languages) the easiest to implement. But everybody hates it because its singleton-y nature means it is a natural target for concurrency problems up the wazoo. (And then there's that whole "Singleton instance vs static methods" debate that goes on.) After all, globals are bad--unless we call them Singletons!
-
-<!--more-->
 
 ## Problem
 We want to ensure only one instance of a given type, and provide a global point of access to it.
 
 ## Context
-*"There must be exactly one instance of a class, and it must be accessible to clients from a well-known access point."* For whatever domain reason, we must have exactly one instance of a given type. (Typically, in a class-based language like Java/C#/C++, this means one instance of a given class type.) This instance should be accessible from anywhere in the codebase, but because we generally want to retain some level of encapsulation over this instance, there should be some level of indirection or access control to the instance, so that we have the ability to change/evolve/refactor.
 
-*When the sole instance should be extensible by subclassing, and clients should be able to use an extended instance without modifying their code.* One of the interesting subtexts around Singleton, as mentioned above, is that whole "instance vs statics" debate: When does a Singleton make sense, as opposed to just a set of statics (methods/properties/fields)? If there is some need/desire to subclass the Singleton type, then the discussion becomes much clearer (although there are a few languages in which static methods can be "overridden" in derived classes, which brings the discussion back again.)
+* "There must be exactly one instance of a class, and it must be accessible to clients from a well-known access point."* For whatever domain reason, we must have exactly one instance of a given type. (Typically, in a class-based language like Java/C#/C++, this means one instance of a given class type.) This instance should be accessible from anywhere in the codebase, but because we generally want to retain some level of encapsulation over this instance, there should be some level of indirection or access control to the instance, so that we have the ability to change/evolve/refactor.
+
+* When the sole instance should be extensible by subclassing, and clients should be able to use an extended instance without modifying their code.* One of the interesting subtexts around Singleton, as mentioned above, is that whole "instance vs statics" debate: When does a Singleton make sense, as opposed to just a set of statics (methods/properties/fields)? If there is some need/desire to subclass the Singleton type, then the discussion becomes much clearer (although there are a few languages in which static methods can be "overridden" in derived classes, which brings the discussion back again.)
 
 ## Solution
 Provide some global/static access entity to obtain that single instance.
