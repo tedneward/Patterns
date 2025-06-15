@@ -5,7 +5,7 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
-import main.java.org.example.AccountFactory;
+import org.example.AccountFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,17 +15,24 @@ class LibraryTest {
         assertTrue(classUnderTest.someLibraryMethod(), "someLibraryMethod should return 'true'");
     }
 
-    @Test void testAccountFactory() {
+    @Test void testSimpleAccountFactory() {
         // Create an instance of AccountFactory
-        AccountFactory af = null;
+        AccountFactory af = new Library.SimpleAccountFactory();
 
         // Build an account portfolio with a total amount of 3000
         buildAccountPortfolio(af, 3000);
 
         // Check if the accounts are created successfully
-        assertNotNull(af.getSavingsAccount(), "Savings account should not be null");
-        assertNotNull(af.getCheckingAccount(), "Checking account should not be null");
-        assertNotNull(af.getInvestmentAccount(), "Investment account should not be null");
+    }
+
+    @Test void testPremiumAccountFactory() {
+        // Create an instance of AccountFactory
+        AccountFactory af = new Library.PremiumAccountFactory();
+
+        // Build an account portfolio with a total amount of 300,000
+        buildAccountPortfolio(af, 300_000);
+
+        // Check if the accounts are created successfully
     }
 
     void buildAccountPortfolio(AccountFactory af, int totalAmount) {

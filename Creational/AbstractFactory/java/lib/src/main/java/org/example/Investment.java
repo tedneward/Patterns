@@ -1,8 +1,11 @@
 package org.example;
 
 public abstract class Investment {
-    int balance = 0;
+    protected int balance = 0;
 
+    public Investment(int initialAmount) {
+        this.balance = initialAmount;
+    }
     public int deposit(int amount) {
         balance += amount;
         return balance;
