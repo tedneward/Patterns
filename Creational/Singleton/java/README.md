@@ -1,28 +1,26 @@
-Like most object-oriented typed languages, Java makes it pretty straightforward to code up a classic [Singleton](../Singleton):
+# Singleton: Java
+Like most object-oriented typed languages, Java makes it pretty straightforward to code up a classic [Singleton](../README.md):
 
 ````java
-public class Product
-{
+/**
+ * Singleton class that ensures only one instance is created.
+ * This class uses the eager initialization method to create the instance.
+ */
+public class ProductV1 {
+  private static Product instance = new Product();
   private Product() { }
-  
-  public static Product Instance() {
+  public static Product instance() {
     return instance;
   }
-  private static Product instance = new Product();
   
-  public void DoSomething() {
+  private int state = 0;
+  public int getState() {
+    return state;
+  }
+  
+  public void doSomething() {
     state++;
     System.out.println("I'm doing something for the " + state + " time");
-  }
-  private int state = 0;
-}
-
-public class Main
-{
-  public static void main(String... args) {
-    Product.Instance().DoSomething();
-    Product.Instance().DoSomething();
-    Product.Instance().DoSomething();
   }
 }
 ````

@@ -5,20 +5,29 @@ package org.example;
 
 public class App {
     public static void main(String[] args) {
-        // Create a singleton instance
-        SingletonV1 singleton = SingletonV1.getInstance();
-        singleton.doSomething();
+        // Create a Product instance
+        ProductV1 product = ProductV1.instance();
+        product.doSomething();
 
         // Verify that the same instance is returned
-        SingletonV1 anotherInstance = SingletonV1.getInstance();
-        System.out.println("Are both instances the same? " + (singleton == anotherInstance));
+        ProductV1 anotherInstance = ProductV1.getInstance();
+        System.out.println("Are both instances the same? " + (product == anotherInstance));
 
-        // Create a singleton instance
-        SingletonV3 s2 = SingletonV3.getInstance();
+        // Create a Product instance
+        ProductV2 s2 = ProductV2.getInstance();
         s2.doSomething();
 
         // Verify that the same instance is returned
-        SingletonV3 ai2 = SingletonV3.getInstance();
+        ProductV2 ai2 = ProductV2.getInstance();
         System.out.println("Are both instances the same? " + (s2 == ai2));
+
+        // Create a Product instance
+        ProductV3 s3 = ProductV3.INSTANCE;
+        s3.doSomething();
+
+        // Verify that the same instance is returned
+        ProductV3 ai3 = ProductV3.INSTANCE;
+        System.out.println("Are both instances the same? " + (s3 == ai3));
+
     }
 }
