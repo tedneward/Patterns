@@ -28,12 +28,12 @@ Note that some solutions seek to have singleton-ness imposed externally, by wrap
 
 ## Implementations
 
-* [Swift](./swift.html)
-* [Java](./java.html)
-* [Scala](./scala.html)
-* [JavaScript](./javascript.html)
-* [C#](./csharp.html)
-* [F#](./fsharp.html)
+* [Swift](./swift/README.md)
+* [Java](./java/README.md)
+* [Scala](./scala/README.md)
+* [JavaScript](./javascript/README.md)
+* [C#](./csharp/README.md)
+* [F#](./fsharp/README.md)
 
 ## Consequences
 Singleton yields the following:
