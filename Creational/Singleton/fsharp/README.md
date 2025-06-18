@@ -1,12 +1,6 @@
-title=Singleton: F#
-date=2016-03-29
-type=pattern
-tags=pattern implementation, creational, fsharp
-status=published
-description=A Singleton implementation in F#.
-~~~~~~
+# Singleton: F#
 
-F# being a functional/object hybrid language makes it easy to do the traditional [Singleton](../Singleton) without much more work to do beyond what we see in languages like C++/Java/C#:
+F# being a functional/object hybrid language makes it easy to do the traditional [Singleton](../README.md) without much more work to do beyond what we see in languages like C++/Java/C#:
 
 ````fsharp
 type Product private () =

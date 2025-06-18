@@ -1,12 +1,6 @@
-title=Singleton: Swift
-date=2016-03-26
-type=pattern
-tags=pattern implementation, creational, swift
-status=published
-description=A Singleton implementation in Swift.
-~~~~~~
+# Singleton: Swift
 
-Like most languages, Swift makes it pretty straightforward to code up a classic [Singleton](../Singleton):
+Like most languages, Swift makes it pretty straightforward to code up a classic [Singleton](../README.md):
 
 ````swift
 import Foundation

@@ -1,12 +1,8 @@
-title=Singleton: Javascript
-date=2016-03-26
-type=pattern
-tags=pattern implementation, creational, javascript
-status=published
-description=A Singleton implementation in Javascript.
-~~~~~~
+# Singleton: Javascript
 
-Javascript presents some challenges when working with [Singletons](../Singleton). Being a prototype-based language (meaning there are no classes), Singletons in Javascript are usually centered more around the conceptual contents of the object, not it's nominal type. This means that there's no concept of "static", either, since "statics" are essentially a synonym for "type" or "class" elements in the other object-oriented languages. In addition, Javascript objects are simply "bags" of name/value pairs with no access control, which means that in addition to the instance now having no real (language- or environment-enforced) access control, we may have to get a little creative just to help ensure that clients will always go to the right place to find the lone (intended) instance.
+Javascript presents some challenges when working with [Singletons](../README.md). Being a prototype-based language (meaning there are no classes, *per se*), Singletons in Javascript are usually centered more around the conceptual contents of the object, not it's nominal type. This means that there's no concept of "static", either, since "statics" are essentially a synonym for "type" or "class" elements in the other object-oriented languages. 
+
+In addition, Javascript objects are simply "bags" of name/value pairs with no access control, which means that in addition to the instance now having no real (language- or environment-enforced) access control, we may have to get a little creative just to help ensure that clients will always go to the right place to find the lone (intended) instance.
 
 To get all of this right, we're going to have to walk through this one step at a time.
 
@@ -87,7 +83,7 @@ At this point, we have a reasonably functional Singleton.
 
 * *It has no concurrency control.* Javascript lacks any sort of language-level concurrency control syntax or semantics. But NodeJS is "single-threaded" when executing our code, so in theory this isn't quite as much of a concern as it might be in other environments.
 * *Eager or JIT?* It's always JIT; Javascript is an interpreted language (at least, in all of the currently popular environments, it is), so unless Javascript defines a language-level module facility that allows for initialization before the Instance() is called, it will have to be JIT. (Incidentally, both NodeJS and ES/JS 6 will provide exactly such facilities.)
-* *Method or property?* Javascript has no concept of a property, per se, so if we want that "barrier" of access control in front of the Singleton instance, accessing the Singleton instance is always going to have to go through a method/function.
+* *Method or property?* Javascript has no concept of a property, *per se*, so if we want that "barrier" of access control in front of the Singleton instance, accessing the Singleton instance is always going to have to go through a method/function.
 * *Enforcing Singleton-ness.* Good luck with that. In Javascript, an object is an object is an object, and since objects have no type and there is no access control, there is really nothing stopping any client from simply `var newInstance = {}` and copying over whatever state it can get its hands on.
 
 #### Properties
@@ -199,5 +195,5 @@ Singleton.Instance = function() {
 }();
 ````
 
-This has the (admittedly tiny) drawback of a performance hit on each call to Instance(); however, remember, this is Javascript, and if you're concerned about performance, boy are you already in trouble.
+This has the (admittedly tiny) drawback of a performance hit on each call to Instance(); however, remember, this is Javascript, and if you're concerned about performance, you are already in trouble.
 
